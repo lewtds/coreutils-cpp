@@ -8,7 +8,7 @@ I aim to implement all `coreutils` commands but not necessarily
 all their options and subtleties. Also, Test Driven Development is
 mandatory.
 
-## Join Force
+## Join Forces
 
 Check the `Makefile`, it's only half a screenful.
 
