@@ -1,27 +1,29 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 int main(int argc, char *argv[])
 {
-    std::istream *input;
-    if (argc == 2) {
-        input = new std::ifstream(argv[1], std::ifstream::in | std::ifstream::binary);
+    std::vector<std::istream*> inputs;
+    if (argc >= 2) {
+        for (int i = 1; i < argc; i++) {
+            inputs.push_back(new std::ifstream(argv[i], std::ifstream::in | std::ifstream::binary));
+        }
     } else {
-        input = &std::cin;
+        inputs.push_back(&std::cin);
     }
-    
-    
-    char buf[512];
-    while (*input) {
-        
-        input->read(buf, sizeof(buf));
 
-        // Check the status of the last read
-        if (*input) {
-            
-            std::cout.write(buf, sizeof(buf));
-        } else {
-            std::cout.write(buf, input->gcount());
+    char buf[512];
+    for(auto input : inputs) {
+        while (*input) {
+            input->read(buf, sizeof(buf));
+    
+            // Are we at end of file?
+            if (*input) {
+                std::cout.write(buf, sizeof(buf));
+            } else {
+                std::cout.write(buf, input->gcount());
+            }
         }
     }
 
