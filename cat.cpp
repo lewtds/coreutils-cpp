@@ -26,6 +26,9 @@ int main(int argc, char *argv[])
             }
         }
     }
+    
+    // FIXME Do we have to close() the streams or are they 
+    //       automatically closed on program ending?
 
     return 0;
 }
