@@ -3,15 +3,25 @@
 
 int main(int argc, char *argv[])
 {
+    std::istream *input;
+    if (argc == 2) {
+        input = new std::ifstream(argv[1], std::ifstream::in | std::ifstream::binary);
+    } else {
+        input = &std::cin;
+    }
+    
+    
     char buf[512];
-    while (!std::cin.eof()) {
-        std::cin.read(buf, sizeof(buf));
+    while (*input) {
+        
+        input->read(buf, sizeof(buf));
 
         // Check the status of the last read
-        if (std::cin) {
+        if (*input) {
+            
             std::cout.write(buf, sizeof(buf));
         } else {
-            std::cout.write(buf, std::cin.gcount());
+            std::cout.write(buf, input->gcount());
         }
     }
 
