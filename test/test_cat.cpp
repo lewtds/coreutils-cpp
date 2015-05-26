@@ -25,4 +25,9 @@ TEST_CASE("Cat shows file content", "[cat]") {
     
     system("rm -rf this.txt is.txt cool.txt");
 }
+
+TEST_CASE("Panic if file cannot be accessed", "[cat]") {
+    int result;
+    call("./cat definitely_nonexistant.txt", &result);
+    REQUIRE(result != 0);   // FIXME Should be 1
 }

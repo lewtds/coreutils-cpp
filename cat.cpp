@@ -7,7 +7,12 @@ int main(int argc, char *argv[])
     std::vector<std::istream*> inputs;
     if (argc >= 2) {
         for (int i = 1; i < argc; i++) {
-            inputs.push_back(new std::ifstream(argv[i], std::ifstream::in | std::ifstream::binary));
+            std::istream *f = new std::ifstream(argv[i], std::ifstream::in | std::ifstream::binary);
+            if (!*f) {
+                std::cerr << argv[i] << ": No such file or directory" << std::endl;
+                return 1;
+            }
+            inputs.push_back(f);
         }
     } else {
         inputs.push_back(&std::cin);
